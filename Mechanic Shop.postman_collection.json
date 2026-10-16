@@ -1,0 +1,393 @@
+{
+	"info": {
+		"_postman_id": "61ab37cc-53d8-48e6-8182-a03e646f56a6",
+		"name": "Mechanic Shop",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"createdAt": "2026-10-14T18:31:30.000Z",
+		"updatedAt": "2026-10-14T23:08:11.000Z",
+		"lastUpdatedBy": "57955262",
+		"uid": "57955262-61ab37cc-53d8-48e6-8182-a03e646f56a6"
+	},
+	"item": [
+		{
+			"name": "Customers",
+			"item": [
+				{
+					"name": "Create Customer",
+					"id": "00ec2d9b-920d-4e2a-8648-71f085cd3a5b",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"name\": \"Jane Doe\", \"email\": \"jane@gmail.com\", \"phone\": \"321-555-0000\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/customers",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"customers"
+							]
+						}
+					},
+					"response": [],
+					"createdAt": "2026-10-14T18:37:12.000Z",
+					"updatedAt": "2026-10-14T18:46:06.000Z",
+					"uid": "57955262-00ec2d9b-920d-4e2a-8648-71f085cd3a5b"
+				},
+				{
+					"name": "Get All Customers",
+					"id": "aa359222-7a26-4ee9-b888-87cedeead0e8",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/customers",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"customers"
+							]
+						}
+					},
+					"response": [],
+					"createdAt": "2026-10-14T18:38:34.000Z",
+					"updatedAt": "2026-10-14T18:46:08.000Z",
+					"uid": "57955262-aa359222-7a26-4ee9-b888-87cedeead0e8"
+				},
+				{
+					"name": "Get Customer",
+					"id": "bfb4204b-9654-44fb-8864-7fe624b61f68",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/customers/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"customers",
+								"1"
+							]
+						}
+					},
+					"response": [],
+					"createdAt": "2026-10-14T18:39:06.000Z",
+					"updatedAt": "2026-10-14T18:46:10.000Z",
+					"uid": "57955262-bfb4204b-9654-44fb-8864-7fe624b61f68"
+				},
+				{
+					"name": "Update Customers",
+					"id": "507484fe-e3ac-47f6-94d0-f55d67187b64",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"name\": \"Jane Doe\", \"email\": \"mark@gmail.com\", \"phone\": \"111-555-1111\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/customers/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"customers",
+								"1"
+							]
+						}
+					},
+					"response": [],
+					"createdAt": "2026-10-14T18:39:44.000Z",
+					"updatedAt": "2026-10-14T18:46:13.000Z",
+					"uid": "57955262-507484fe-e3ac-47f6-94d0-f55d67187b64"
+				}
+			],
+			"id": "6c13aa19-a59b-4b7d-9dbb-c3b13a9c4712",
+			"createdAt": "2026-10-14T18:33:01.000Z",
+			"updatedAt": "2026-10-14T23:08:27.000Z",
+			"uid": "57955262-6c13aa19-a59b-4b7d-9dbb-c3b13a9c4712"
+		},
+		{
+			"name": "Mechanics",
+			"item": [
+				{
+					"name": "Create Mechanic",
+					"id": "9974fc36-362f-4385-8095-15601b96498a",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"name\": \"Bob Smith\", \"email\": \"Bob@mechanicshop.com\", \"phone\": \"321-555-0000\", \"salary\": \"55000\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/mechanics",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"mechanics"
+							]
+						}
+					},
+					"response": [],
+					"createdAt": "2026-10-14T18:46:30.000Z",
+					"updatedAt": "2026-10-14T23:36:06.000Z",
+					"uid": "57955262-9974fc36-362f-4385-8095-15601b96498a"
+				},
+				{
+					"name": "Get All Mechanics",
+					"id": "e1d8c85d-564f-47bc-a5df-d15a713eb800",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/mechanics",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"mechanics"
+							]
+						}
+					},
+					"response": [],
+					"createdAt": "2026-10-14T18:46:30.000Z",
+					"updatedAt": "2026-10-14T23:32:49.000Z",
+					"uid": "57955262-e1d8c85d-564f-47bc-a5df-d15a713eb800"
+				},
+				{
+					"name": "Update Mechanic",
+					"id": "706ef4da-eeb3-40fd-ba74-b2a3507fa01e",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"name\": \"Brendan Smith\", \"email\": \"Breandan@mechanicshop.com\", \"phone\": \"222-434-1581\", \"salary\": \"80000\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/mechanics/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"mechanics",
+								"1"
+							]
+						}
+					},
+					"response": [],
+					"createdAt": "2026-10-14T18:46:30.000Z",
+					"updatedAt": "2026-10-14T23:43:04.000Z",
+					"uid": "57955262-706ef4da-eeb3-40fd-ba74-b2a3507fa01e"
+				}
+			],
+			"id": "7a8217c8-37bd-4769-a55c-3153413d534f",
+			"createdAt": "2026-10-14T18:33:32.000Z",
+			"updatedAt": "2026-10-14T23:32:58.000Z",
+			"uid": "57955262-7a8217c8-37bd-4769-a55c-3153413d534f"
+		},
+		{
+			"name": "Service Tickets",
+			"item": [
+				{
+					"name": "Create Service Ticket",
+					"id": "740d0ee8-963c-4da9-b314-b3e00446cef2",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"VIN\": \"1HGCM82633A004352\",\n  \"service_date\": \"2026-10-14\",\n  \"service_desc\": \"Oil change and tire rotation\",\n  \"customer_id\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/service-tickets",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"service-tickets"
+							]
+						}
+					},
+					"response": [],
+					"createdAt": "2026-10-14T20:47:21.000Z",
+					"updatedAt": "2026-10-14T22:56:08.000Z",
+					"uid": "57955262-740d0ee8-963c-4da9-b314-b3e00446cef2"
+				},
+				{
+					"name": "Get All Service Tickets",
+					"id": "8c177f5b-8e3d-4857-a044-8e0535aa058d",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/service-tickets",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"service-tickets"
+							]
+						}
+					},
+					"response": [],
+					"createdAt": "2026-10-14T20:47:21.000Z",
+					"updatedAt": "2026-10-14T23:04:43.000Z",
+					"uid": "57955262-8c177f5b-8e3d-4857-a044-8e0535aa058d"
+				},
+				{
+					"name": "Assign Mechanic to Ticket",
+					"id": "0b05f4a6-7a96-4b76-829e-4f1fd68b54d1",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/service-tickets/1/assign-mechanic/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"service-tickets",
+								"1",
+								"assign-mechanic",
+								"1"
+							]
+						}
+					},
+					"response": [],
+					"createdAt": "2026-10-14T20:47:21.000Z",
+					"updatedAt": "2026-10-14T23:07:17.000Z",
+					"uid": "57955262-0b05f4a6-7a96-4b76-829e-4f1fd68b54d1"
+				}
+			],
+			"id": "a4520b8d-8f7a-4503-a8a8-4b0f3ce719fa",
+			"createdAt": "2026-10-14T18:34:13.000Z",
+			"updatedAt": "2026-10-14T23:33:28.000Z",
+			"uid": "57955262-a4520b8d-8f7a-4503-a8a8-4b0f3ce719fa"
+		},
+		{
+			"name": "Cleanup",
+			"item": [
+				{
+					"name": "Remove Mechanic From Ticket",
+					"id": "43825ed6-dd43-4069-89d3-9c77f22e15c3",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/service-tickets/1/remove-mechanic/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"service-tickets",
+								"1",
+								"remove-mechanic",
+								"1"
+							]
+						}
+					},
+					"response": [],
+					"createdAt": "2026-10-14T20:47:21.000Z",
+					"updatedAt": "2026-10-14T23:41:55.000Z",
+					"uid": "57955262-43825ed6-dd43-4069-89d3-9c77f22e15c3"
+				},
+				{
+					"name": "Delete Customer",
+					"id": "7b698210-0c79-435b-b90e-dbcbe735c1b9",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/customers/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"customers",
+								"1"
+							]
+						}
+					},
+					"response": [],
+					"createdAt": "2026-10-14T18:42:36.000Z",
+					"updatedAt": "2026-10-14T23:34:28.000Z",
+					"uid": "57955262-7b698210-0c79-435b-b90e-dbcbe735c1b9"
+				},
+				{
+					"name": "Delete Mechanic",
+					"id": "5864b6c9-57f5-45c7-95c8-b428c203143f",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/mechanics/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"mechanics",
+								"1"
+							]
+						}
+					},
+					"response": [],
+					"createdAt": "2026-10-14T18:46:30.000Z",
+					"updatedAt": "2026-10-14T23:34:38.000Z",
+					"uid": "57955262-5864b6c9-57f5-45c7-95c8-b428c203143f"
+				}
+			],
+			"id": "c75da5f0-6d8a-4ec1-aca4-7f4726e2a509",
+			"createdAt": "2026-10-14T23:08:11.000Z",
+			"updatedAt": "2026-10-14T23:09:00.000Z",
+			"uid": "57955262-c75da5f0-6d8a-4ec1-aca4-7f4726e2a509"
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://127.0.0.1:5000"
+		}
+	]
+}
