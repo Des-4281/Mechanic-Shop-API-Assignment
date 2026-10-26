@@ -2,8 +2,10 @@ from flask import request, jsonify
 from marshmallow import ValidationError
 from sqlalchemy import select
 from . import mechanics_bp
-from .schemas import mechanic_schema, mechanics_schema
+from .schemas import mechanic_schema, mechanics_schema, mechanic_login_schema
 from app.models import Mechanic, db
+from app.extensions import limiter
+from app.utils.util import encode_mechanic_token, mechanic_token_required
 
 @mechanics_bp.route("", methods=['POST'])
 def create_mechanic():
@@ -29,7 +31,8 @@ def get_mechanics():
 
     return mechanics_schema.jsonify(mechanics), 200
 
-@mechanics_bp.route("/<int:mechanic_id>", methods=['PUT'])
+@mechanics_bp.route("", methods=['PUT'])
+@mechanic_token_required
 def update_mechanic(mechanic_id):
     mechanic = db.session.get(Mechanic, mechanic_id)
 
@@ -47,7 +50,8 @@ def update_mechanic(mechanic_id):
     db.session.commit()
     return mechanic_schema.jsonify(mechanic), 200
 
-@mechanics_bp.route("/<int:mechanic_id>", methods=['DELETE'])
+@mechanics_bp.route("", methods=['DELETE'])
+@mechanic_token_required
 def delete_mechanic(mechanic_id):
     mechanic = db.session.get(Mechanic, mechanic_id)
 
@@ -57,3 +61,24 @@ def delete_mechanic(mechanic_id):
     db.session.delete(mechanic)
     db.session.commit()
     return jsonify({"message": f'Mechanic id: {mechanic_id}, successfully deleted.'}), 200
+
+@mechanics_bp.route("/login", methods=['POST'])
+@limiter.limit("5 per minute")  # Slows down anyone trying to guess passwords
+def login():
+    try:
+        credentials = mechanic_login_schema.load(request.json)
+    except ValidationError as e:
+        return jsonify(e.messages), 400
+
+    query = select(Mechanic).where(Mechanic.email == credentials['email'])
+    mechanic = db.session.execute(query).scalar_one_or_none()
+
+    if mechanic and mechanic.password == credentials['password']:
+        token = encode_mechanic_token(mechanic.id)
+        return jsonify({
+            "status": "success",
+            "message": "Successfully logged in.",
+            "auth_token": token
+        }), 200
+
+    return jsonify({"message": "Invalid email or password."}), 401
