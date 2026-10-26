@@ -29,12 +29,19 @@ def create_customer():
     return customer_schema.jsonify(new_customer), 201
 
 @customers_bp.route("", methods=['GET'])
-@cache.cached(timeout=60)
+@cache.cached(timeout=60, query_string=True)
 def get_customers():
-    query = select(Customer)
-    customers = db.session.execute(query).scalars().all()
+    try: 
+        page = int(request.args.get('page'))
+        per_page = int(request.args.get('per_page'))
+        query = select(Customer)
+        customers = db.paginate(query, page=page, per_page=per_page)
+        return customers_schema.jsonify(customers.items), 200 
 
-    return customers_schema.jsonify(customers)
+    except (TypeError, ValueError):
+        query = select(Customer)
+        customers = db.session.execute(query).scalars().all()
+        return customers_schema.jsonify(customers), 200
 
 @customers_bp.route("/<int:customer_id>", methods=['GET'])
 def get_customer(customer_id):

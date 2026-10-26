@@ -82,3 +82,9 @@ def login():
         }), 200
 
     return jsonify({"message": "Invalid email or password."}), 401
+
+@mechanics_bp.route("/most-tickets", methods=['GET'])
+def get_mechanic_by_tickets():
+    mechanics = db.session.execute(select(Mechanic)).scalars().all()
+    mechanics.sort(key=lambda mechanic: len(mechanic.service_tickets), reverse=True)
+    return mechanics_schema.jsonify(mechanics), 200
