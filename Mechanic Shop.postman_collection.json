@@ -2,15 +2,12 @@
 	"info": {
 		"_postman_id": "61ab37cc-53d8-48e6-8182-a03e646f56a6",
 		"name": "Mechanic Shop",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"createdAt": "2026-10-14T18:31:30.000Z",
-		"updatedAt": "2026-10-14T23:08:11.000Z",
-		"lastUpdatedBy": "57955262",
-		"uid": "57955262-61ab37cc-53d8-48e6-8182-a03e646f56a6"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
 			"name": "Customers",
+			"id": "6c13aa19-a59b-4b7d-9dbb-c3b13a9c4712",
 			"item": [
 				{
 					"name": "Create Customer",
@@ -18,15 +15,6 @@
 					"request": {
 						"method": "POST",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\"name\": \"Jane Doe\", \"email\": \"jane@gmail.com\", \"phone\": \"321-555-0000\"}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
 							"raw": "{{base_url}}/customers",
 							"host": [
@@ -35,12 +23,69 @@
 							"path": [
 								"customers"
 							]
+						},
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Jane Doe\",\n  \"email\": \"jane@gmail.com\",\n  \"phone\": \"321-555-0000\",\n  \"password\": \"test123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
 						}
 					},
 					"response": [],
-					"createdAt": "2026-10-14T18:37:12.000Z",
-					"updatedAt": "2026-10-14T18:46:06.000Z",
-					"uid": "57955262-00ec2d9b-920d-4e2a-8648-71f085cd3a5b"
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status is 201 Created\", () => pm.response.to.have.status(201));"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Customer Login",
+					"id": "d7b57bc0-b19d-4e16-8e3d-4507a2b4d47d",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/customers/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"customers",
+								"login"
+							]
+						},
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"jane@gmail.com\",\n  \"password\": \"test123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status is 200 OK\", () => pm.response.to.have.status(200));",
+									"pm.collectionVariables.set(\"token\", pm.response.json().auth_token);"
+								]
+							}
+						}
+					]
 				},
 				{
 					"name": "Get All Customers",
@@ -59,9 +104,56 @@
 						}
 					},
 					"response": [],
-					"createdAt": "2026-10-14T18:38:34.000Z",
-					"updatedAt": "2026-10-14T18:46:08.000Z",
-					"uid": "57955262-aa359222-7a26-4ee9-b888-87cedeead0e8"
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status is 200 OK\", () => pm.response.to.have.status(200));"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Get Customers (Paginated)",
+					"id": "083c2387-4a32-4c13-ade5-897bf7ac9fa3",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/customers?page=1&per_page=5",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"customers"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "per_page",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status is 200 OK\", () => pm.response.to.have.status(200));"
+								]
+							}
+						}
+					]
 				},
 				{
 					"name": "Get Customer",
@@ -81,49 +173,71 @@
 						}
 					},
 					"response": [],
-					"createdAt": "2026-10-14T18:39:06.000Z",
-					"updatedAt": "2026-10-14T18:46:10.000Z",
-					"uid": "57955262-bfb4204b-9654-44fb-8864-7fe624b61f68"
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status is 200 OK\", () => pm.response.to.have.status(200));"
+								]
+							}
+						}
+					]
 				},
 				{
-					"name": "Update Customers",
-					"id": "507484fe-e3ac-47f6-94d0-f55d67187b64",
+					"name": "Update Customer",
+					"id": "9f748678-7175-47a4-a851-d4ecd9699995",
 					"request": {
 						"method": "PUT",
 						"header": [],
+						"url": {
+							"raw": "{{base_url}}/customers",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"customers"
+							]
+						},
 						"body": {
 							"mode": "raw",
-							"raw": "{\"name\": \"Jane Doe\", \"email\": \"mark@gmail.com\", \"phone\": \"111-555-1111\"}",
+							"raw": "{\n  \"name\": \"Jane Doe\",\n  \"email\": \"jane@gmail.com\",\n  \"phone\": \"111-555-1111\",\n  \"password\": \"test123\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
 								}
 							}
 						},
-						"url": {
-							"raw": "{{base_url}}/customers/1",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"customers",
-								"1"
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
 							]
 						}
 					},
 					"response": [],
-					"createdAt": "2026-10-14T18:39:44.000Z",
-					"updatedAt": "2026-10-14T18:46:13.000Z",
-					"uid": "57955262-507484fe-e3ac-47f6-94d0-f55d67187b64"
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status is 200 OK\", () => pm.response.to.have.status(200));"
+								]
+							}
+						}
+					]
 				}
-			],
-			"id": "6c13aa19-a59b-4b7d-9dbb-c3b13a9c4712",
-			"createdAt": "2026-10-14T18:33:01.000Z",
-			"updatedAt": "2026-10-14T23:08:27.000Z",
-			"uid": "57955262-6c13aa19-a59b-4b7d-9dbb-c3b13a9c4712"
+			]
 		},
 		{
 			"name": "Mechanics",
+			"id": "7a8217c8-37bd-4769-a55c-3153413d534f",
 			"item": [
 				{
 					"name": "Create Mechanic",
@@ -131,15 +245,6 @@
 					"request": {
 						"method": "POST",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\"name\": \"Bob Smith\", \"email\": \"Bob@mechanicshop.com\", \"phone\": \"321-555-0000\", \"salary\": \"55000\"}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
 							"raw": "{{base_url}}/mechanics",
 							"host": [
@@ -148,12 +253,69 @@
 							"path": [
 								"mechanics"
 							]
+						},
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Bob Smith\",\n  \"email\": \"Bob@mechanicshop.com\",\n  \"phone\": \"321-555-0000\",\n  \"salary\": 55000,\n  \"password\": \"mech123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
 						}
 					},
 					"response": [],
-					"createdAt": "2026-10-14T18:46:30.000Z",
-					"updatedAt": "2026-10-14T23:36:06.000Z",
-					"uid": "57955262-9974fc36-362f-4385-8095-15601b96498a"
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status is 201 Created\", () => pm.response.to.have.status(201));"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Mechanic Login",
+					"id": "6b9f1024-f6b9-448e-b59a-c4836a783c77",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/mechanics/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"mechanics",
+								"login"
+							]
+						},
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"Bob@mechanicshop.com\",\n  \"password\": \"mech123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status is 200 OK\", () => pm.response.to.have.status(200));",
+									"pm.collectionVariables.set(\"mechanic_token\", pm.response.json().auth_token);"
+								]
+							}
+						}
+					]
 				},
 				{
 					"name": "Get All Mechanics",
@@ -172,9 +334,17 @@
 						}
 					},
 					"response": [],
-					"createdAt": "2026-10-14T18:46:30.000Z",
-					"updatedAt": "2026-10-14T23:32:49.000Z",
-					"uid": "57955262-e1d8c85d-564f-47bc-a5df-d15a713eb800"
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status is 200 OK\", () => pm.response.to.have.status(200));"
+								]
+							}
+						}
+					]
 				},
 				{
 					"name": "Update Mechanic",
@@ -182,39 +352,262 @@
 					"request": {
 						"method": "PUT",
 						"header": [],
+						"url": {
+							"raw": "{{base_url}}/mechanics",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"mechanics"
+							]
+						},
 						"body": {
 							"mode": "raw",
-							"raw": "{\"name\": \"Brendan Smith\", \"email\": \"Breandan@mechanicshop.com\", \"phone\": \"222-434-1581\", \"salary\": \"80000\"}",
+							"raw": "{\n  \"name\": \"Brendan Smith\",\n  \"email\": \"Bob@mechanicshop.com\",\n  \"phone\": \"321-555-0000\",\n  \"salary\": 80000,\n  \"password\": \"mech123\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
 								}
 							}
 						},
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{mechanic_token}}",
+									"type": "string"
+								}
+							]
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status is 200 OK\", () => pm.response.to.have.status(200));"
+								]
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Inventory",
+			"item": [
+				{
+					"name": "Create Part - Customer Token (403)",
+					"id": "3eb8b6e4-469b-49ff-b4a0-7ad7e324a245",
+					"request": {
+						"method": "POST",
+						"header": [],
 						"url": {
-							"raw": "{{base_url}}/mechanics/1",
+							"raw": "{{base_url}}/inventory",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
-								"mechanics",
+								"inventory"
+							]
+						},
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Oil Filter\",\n  \"price\": 12.99\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status is 403 Forbidden\", () => pm.response.to.have.status(403));"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Create Part",
+					"id": "928784ea-b3ff-480c-a593-f8ceacccf769",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/inventory",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"inventory"
+							]
+						},
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Oil Filter\",\n  \"price\": 12.99\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{mechanic_token}}",
+									"type": "string"
+								}
+							]
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status is 201 Created\", () => pm.response.to.have.status(201));"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Get All Parts",
+					"id": "15692456-580f-4f33-b336-0350dc38e59b",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/inventory",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"inventory"
+							]
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status is 200 OK\", () => pm.response.to.have.status(200));"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Get Part",
+					"id": "53721e50-286e-4b26-bbe2-d07a4dcef075",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/inventory/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"inventory",
 								"1"
 							]
 						}
 					},
 					"response": [],
-					"createdAt": "2026-10-14T18:46:30.000Z",
-					"updatedAt": "2026-10-14T23:43:04.000Z",
-					"uid": "57955262-706ef4da-eeb3-40fd-ba74-b2a3507fa01e"
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status is 200 OK\", () => pm.response.to.have.status(200));"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Update Part",
+					"id": "b4e33cc3-e0b4-4c5f-948a-38bc0283a1b9",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/inventory/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"inventory",
+								"1"
+							]
+						},
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Oil Filter\",\n  \"price\": 14.99\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{mechanic_token}}",
+									"type": "string"
+								}
+							]
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status is 200 OK\", () => pm.response.to.have.status(200));"
+								]
+							}
+						}
+					]
 				}
-			],
-			"id": "7a8217c8-37bd-4769-a55c-3153413d534f",
-			"createdAt": "2026-10-14T18:33:32.000Z",
-			"updatedAt": "2026-10-14T23:32:58.000Z",
-			"uid": "57955262-7a8217c8-37bd-4769-a55c-3153413d534f"
+			]
 		},
 		{
 			"name": "Service Tickets",
+			"id": "a4520b8d-8f7a-4503-a8a8-4b0f3ce719fa",
 			"item": [
 				{
 					"name": "Create Service Ticket",
@@ -222,15 +615,6 @@
 					"request": {
 						"method": "POST",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"VIN\": \"1HGCM82633A004352\",\n  \"service_date\": \"2026-10-14\",\n  \"service_desc\": \"Oil change and tire rotation\",\n  \"customer_id\": 1\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
 							"raw": "{{base_url}}/service-tickets",
 							"host": [
@@ -239,12 +623,29 @@
 							"path": [
 								"service-tickets"
 							]
+						},
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"VIN\": \"1HGCM82633A004352\",\n  \"service_date\": \"2026-10-14\",\n  \"service_desc\": \"Oil change and tire rotation\",\n  \"customer_id\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
 						}
 					},
 					"response": [],
-					"createdAt": "2026-10-14T20:47:21.000Z",
-					"updatedAt": "2026-10-14T22:56:08.000Z",
-					"uid": "57955262-740d0ee8-963c-4da9-b314-b3e00446cef2"
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status is 201 Created\", () => pm.response.to.have.status(201));"
+								]
+							}
+						}
+					]
 				},
 				{
 					"name": "Get All Service Tickets",
@@ -263,9 +664,17 @@
 						}
 					},
 					"response": [],
-					"createdAt": "2026-10-14T20:47:21.000Z",
-					"updatedAt": "2026-10-14T23:04:43.000Z",
-					"uid": "57955262-8c177f5b-8e3d-4857-a044-8e0535aa058d"
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status is 200 OK\", () => pm.response.to.have.status(200));"
+								]
+							}
+						}
+					]
 				},
 				{
 					"name": "Assign Mechanic to Ticket",
@@ -273,15 +682,6 @@
 					"request": {
 						"method": "PUT",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
 							"raw": "{{base_url}}/service-tickets/1/assign-mechanic/1",
 							"host": [
@@ -296,19 +696,18 @@
 						}
 					},
 					"response": [],
-					"createdAt": "2026-10-14T20:47:21.000Z",
-					"updatedAt": "2026-10-14T23:07:17.000Z",
-					"uid": "57955262-0b05f4a6-7a96-4b76-829e-4f1fd68b54d1"
-				}
-			],
-			"id": "a4520b8d-8f7a-4503-a8a8-4b0f3ce719fa",
-			"createdAt": "2026-10-14T18:34:13.000Z",
-			"updatedAt": "2026-10-14T23:33:28.000Z",
-			"uid": "57955262-a4520b8d-8f7a-4503-a8a8-4b0f3ce719fa"
-		},
-		{
-			"name": "Cleanup",
-			"item": [
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status is 200 OK\", () => pm.response.to.have.status(200));"
+								]
+							}
+						}
+					]
+				},
 				{
 					"name": "Remove Mechanic From Ticket",
 					"id": "43825ed6-dd43-4069-89d3-9c77f22e15c3",
@@ -329,9 +728,247 @@
 						}
 					},
 					"response": [],
-					"createdAt": "2026-10-14T20:47:21.000Z",
-					"updatedAt": "2026-10-14T23:41:55.000Z",
-					"uid": "57955262-43825ed6-dd43-4069-89d3-9c77f22e15c3"
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status is 200 OK\", () => pm.response.to.have.status(200));"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Edit Ticket",
+					"id": "2ce57752-2877-486d-8969-cf0a5a5b06ed",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/service-tickets/1/edit",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"service-tickets",
+								"1",
+								"edit"
+							]
+						},
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"add_ids\": [\n    1\n  ],\n  \"remove_ids\": []\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status is 200 OK\", () => pm.response.to.have.status(200));"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Add Part to Ticket",
+					"id": "52d8f875-1f2a-4f4c-96aa-256b93b0c870",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/service-tickets/1/add-part/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"service-tickets",
+								"1",
+								"add-part",
+								"1"
+							]
+						},
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"quantity\": 2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status is 200 OK\", () => pm.response.to.have.status(200));"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "My Tickets - No Token (401)",
+					"id": "bacdab54-acc9-4fc0-9efe-9fa98986c0d7",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/customers/my-tickets",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"customers",
+								"my-tickets"
+							]
+						},
+						"auth": {
+							"type": "noauth"
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status is 401 Unauthorized\", () => pm.response.to.have.status(401));"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "My Tickets",
+					"id": "fe20fe10-ac33-4551-be31-4730995b3991",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/customers/my-tickets",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"customers",
+								"my-tickets"
+							]
+						},
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status is 200 OK\", () => pm.response.to.have.status(200));"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Mechanics by Most Tickets",
+					"id": "174d897c-4e03-4d0c-a711-534ecf61753c",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/mechanics/most-tickets",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"mechanics",
+								"most-tickets"
+							]
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status is 200 OK\", () => pm.response.to.have.status(200));"
+								]
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Cleanup",
+			"id": "c75da5f0-6d8a-4ec1-aca4-7f4726e2a509",
+			"item": [
+				{
+					"name": "Delete Part",
+					"id": "1863ad2b-04c6-4280-9c5d-82e7df823da3",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/inventory/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"inventory",
+								"1"
+							]
+						},
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{mechanic_token}}",
+									"type": "string"
+								}
+							]
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status is 200 OK\", () => pm.response.to.have.status(200));"
+								]
+							}
+						}
+					]
 				},
 				{
 					"name": "Delete Customer",
@@ -340,20 +977,37 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/customers/1",
+							"raw": "{{base_url}}/customers",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
-								"customers",
-								"1"
+								"customers"
+							]
+						},
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
 							]
 						}
 					},
 					"response": [],
-					"createdAt": "2026-10-14T18:42:36.000Z",
-					"updatedAt": "2026-10-14T23:34:28.000Z",
-					"uid": "57955262-7b698210-0c79-435b-b90e-dbcbe735c1b9"
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status is 200 OK\", () => pm.response.to.have.status(200));"
+								]
+							}
+						}
+					]
 				},
 				{
 					"name": "Delete Mechanic",
@@ -362,32 +1016,53 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/mechanics/1",
+							"raw": "{{base_url}}/mechanics",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
-								"mechanics",
-								"1"
+								"mechanics"
+							]
+						},
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{mechanic_token}}",
+									"type": "string"
+								}
 							]
 						}
 					},
 					"response": [],
-					"createdAt": "2026-10-14T18:46:30.000Z",
-					"updatedAt": "2026-10-14T23:34:38.000Z",
-					"uid": "57955262-5864b6c9-57f5-45c7-95c8-b428c203143f"
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status is 200 OK\", () => pm.response.to.have.status(200));"
+								]
+							}
+						}
+					]
 				}
-			],
-			"id": "c75da5f0-6d8a-4ec1-aca4-7f4726e2a509",
-			"createdAt": "2026-10-14T23:08:11.000Z",
-			"updatedAt": "2026-10-14T23:09:00.000Z",
-			"uid": "57955262-c75da5f0-6d8a-4ec1-aca4-7f4726e2a509"
+			]
 		}
 	],
 	"variable": [
 		{
 			"key": "base_url",
 			"value": "http://127.0.0.1:5000"
+		},
+		{
+			"key": "token",
+			"value": ""
+		},
+		{
+			"key": "mechanic_token",
+			"value": ""
 		}
 	]
 }

@@ -1,6 +1,7 @@
 from app.extensions import ma
-from app.models import ServiceTicket
+from app.models import ServiceTicket, ServiceInventory
 from app.blueprints.mechanics.schemas import MechanicSchema
+from app.blueprints.inventory.schemas import InventorySchema
 from marshmallow import fields 
 
 class EditTicketSchema(ma.Schema): 
@@ -9,8 +10,17 @@ class EditTicketSchema(ma.Schema):
 
 edit_ticket_schema = EditTicketSchema()
 
+class ServiceInventorySchema(ma.SQLAlchemyAutoSchema):
+    part = ma.Nested(InventorySchema)
+
+    class Meta: 
+        model = ServiceInventory
+        fields = ('quantity', 'part')
+
+
 class ServiceTicketSchema(ma.SQLAlchemyAutoSchema):
     mechanics = ma.Nested(MechanicSchema, many=True, dump_only=True)
+    part_links = ma.Nested(ServiceInventorySchema, many=True, dump_only=True)
 
     class Meta:
         model = ServiceTicket

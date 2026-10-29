@@ -3,7 +3,7 @@ from marshmallow import ValidationError
 from sqlalchemy import select
 from . import service_tickets_bp
 from .schemas import service_ticket_schema, service_tickets_schema, edit_ticket_schema
-from app.models import ServiceTicket, Mechanic, Customer, db
+from app.models import Inventory, ServiceInventory, ServiceTicket, Mechanic, Customer, db
 
 
 @service_tickets_bp.route("", methods=['POST'])
@@ -85,4 +85,20 @@ def edit_ticket(ticket_id):
             ticket.mechanics.remove(mechanic)
     
     db.session.commit()
+    return service_ticket_schema.jsonify(ticket), 200
+
+@service_tickets_bp.route("/<int:ticket_id>/add-part/<int:inventory_id>", methods=['PUT'])
+def add_part(ticket_id, inventory_id):
+    ticket = db.session.get(ServiceTicket, ticket_id) 
+    part = db.session.get(Inventory, inventory_id)
+
+    if not ticket: 
+        return jsonify({"error": "Service ticket not found."}), 404
+    if not part: 
+        return jsonify({"error": "Inventory part not found."}), 404
+
+    quantity = request.json.get('quantity', 1) if request.is_json else 1
+    db.session.add(ServiceInventory(ticket_id=ticket_id, inventory_id=inventory_id, quantity=quantity))
+    db.session.commit()
+
     return service_ticket_schema.jsonify(ticket), 200

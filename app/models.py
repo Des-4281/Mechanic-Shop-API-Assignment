@@ -15,12 +15,16 @@ service_mechanics = db.Table(
     db.Column('mechanic_id', db.ForeignKey('mechanics.id'))
 )
 
-service_inventory = db.Table(
-    'service_inventory',
-    Base.metadata,
-    db.Column('ticket_id', db.ForeignKey('service_tickets.id')),
-    db.Column('inventory_id', db.ForeignKey('inventory.id'))
-)
+class ServiceInventory(Base): 
+    __tablename__ = 'service_inventory'
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    ticket_id: Mapped[int] = mapped_column(db.ForeignKey('service_tickets.id'))
+    inventory_id: Mapped[int] = mapped_column(db.ForeignKey('inventory.id'))
+    quantity: Mapped[int] = mapped_column(db.Integer, nullable=False)
+
+    ticket: Mapped['ServiceTicket'] = db.relationship(back_populates='part_links')
+    part: Mapped['Inventory'] = db.relationship(back_populates='ticket_links') 
 
 class Customer(Base):
     __tablename__ = 'customers'
@@ -45,7 +49,7 @@ class ServiceTicket(Base):
 
     customer: Mapped['Customer'] = db.relationship(back_populates='service_tickets')
     mechanics: Mapped[List['Mechanic']] = db.relationship(secondary=service_mechanics, back_populates='service_tickets')
-    parts: Mapped[List['Inventory']] = db.relationship(secondary=service_inventory, back_populates='service_tickets')
+    part_links: Mapped[List['ServiceInventory']] = db.relationship(back_populates='ticket', cascade='all, delete-orphan')
 
 class Mechanic(Base):
     __tablename__ = 'mechanics'
@@ -67,4 +71,4 @@ class Inventory(Base):
     name: Mapped[str] = mapped_column(db.String(255), nullable=False)
     price: Mapped[float] = mapped_column(db.Float, nullable=False)
 
-    service_tickets: Mapped[List['ServiceTicket']] = db.relationship(secondary=service_inventory, back_populates='parts') 
+    ticket_links: Mapped[List['ServiceInventory']] = db.relationship(back_populates='part', cascade='all, delete-orphan' ) 
